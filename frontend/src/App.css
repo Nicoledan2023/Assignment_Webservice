@@ -1,0 +1,89 @@
+.card{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+label{
+    width: max-content;
+    color: tomato;
+    font-size: 13px;
+    border-bottom:  .5px solid tomato;
+    margin:3px 0;
+}
+
+.desc{
+    font-size: 14px;
+}
+
+.star{
+    color: gold;
+}
+
+.uername{
+    font-size: 14px;
+    color: gray;
+}
+
+.date{
+    font-size: 12px;
+    color: royalblue;
+}
+
+form{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+input,textArea{
+    border: none;
+    border-bottom: 1px solid green;
+}
+
+input::placeholder,textArea::placeholder{
+    color:grey;
+    font-size: 12px;
+}
+
+.submitButton{
+    border: none;
+    background-color: green;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.logout{
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;   
+    background-color: red;
+}
+
+.login{
+    border: none;
+    margin-right: 10px;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;   
+    background-color: green;
+}
+
+.register{
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;   
+    background-color: blue;
+}
