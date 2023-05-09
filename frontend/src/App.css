@@ -87,3 +87,14 @@ input::placeholder,textArea::placeholder{
     cursor: pointer;   
     background-color: blue;
 }
+
+.ad
+{
+  width: 200px;
+  height: 100px;
+   background-color: yellow;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+}

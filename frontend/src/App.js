@@ -2,13 +2,20 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ReactMapGL from "react-map-gl";
 import { Marker, Popup } from "react-map-gl";
-import { Room, Star } from "@material-ui/icons";
+import {
+  LabelTwoTone,
+  Room,
+  SignalCellularNullRounded,
+  Star,
+} from "@material-ui/icons";
 import "./App.css";
 import axios from "axios";
 import { format } from "timeago.js";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import { NavigationControl } from "react-map-gl";
+import { GeolocateControl } from "react-map-gl";
+import searchPlaces from "./coffee";
 
 export default function App() {
   const myStorage = window.localStorage;
@@ -23,12 +30,44 @@ export default function App() {
   const [showLogin, setShowLogin] = useState(false);
 
   const [viewport, setViewport] = useState({
-    latitude: 45.42202542304392,
-    longitude: -75.80049555024144,
+    latitude: 45.329705,
+    longitude: -75.725043,
     width: "100vw",
     height: "800px",
-    zoom: 8,
+    zoom: 10,
   });
+
+  const [places, setPlaces] = useState([]);
+  const [currentPlace, setCurrentPlace] = useState(undefined);
+  const [coffeePlaces, setCoffeePlaces] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const handleSelectPlace = async (place) => {
+    const result = await searchPlaces(place.longitude, place.latitude);
+    // setPlaces(result);
+    setCurrentPlaceId(place.id);
+    setSelectedPlace(place);
+    setViewport({
+      ...viewport,
+      latitude: place.latitude,
+      longitude: place.longitude,
+    });
+  };
+
+  async function fetchData() {
+    const result = await searchPlaces(-75.725043, 45.329705);
+    setCoffeePlaces(result);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (coffeePlaces.length > 0) {
+      setPlaces(coffeePlaces);
+    }
+  }, [coffeePlaces]);
 
   //fetch data from back
   useEffect(() => {
@@ -43,8 +82,17 @@ export default function App() {
     getPins();
   }, []);
 
-  const handleMarkerClick = (id, lat, long) => {
+  const handleMarkerClick = async (id, lat, long) => {
     setCurrentPlaceId(id);
+    setCurrentPlace({
+      id: id,
+      latitude: lat,
+      longitude: long,
+    });
+
+    const result = await searchPlaces(long, lat);
+    setPlaces(result);
+
     setViewport({ ...viewport, latitude: lat, longitude: long });
   };
 
@@ -82,6 +130,15 @@ export default function App() {
     }
   };
 
+  const handleGeolocate = (position) => {
+    setViewport({
+      ...viewport,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      zoom: 14,
+    });
+  };
+
   return (
     <div className="App">
       <div className="button-container">
@@ -108,6 +165,8 @@ export default function App() {
         dragPan={true}
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         transitionDuration="200"
+
+        
         mapStyle="mapbox://styles/mapbox/streets-v11"
         // onMove={(evt) => {
         //   if (evt.viewport && evt.viewport.zoom) {
@@ -148,13 +207,15 @@ export default function App() {
                 closeButton={true}
                 closeOnClick={false}
                 anchor="right"
-                onClose={() => setCurrentPlaceId(null)}
+                onClose={() => setCurrentPlaceId(undefined)}
               >
                 <div className="card">
                   <label>Place</label>
                   <h4 className="place">{p.title}</h4>
                   <label>Review</label>
                   <p className="desc">{p.desc}</p>
+                  <label>Place</label>
+
                   <label>Rating</label>
                   <div className="stars">
                     {Array(p.rating).fill(<Star className="star" />)}
@@ -168,6 +229,27 @@ export default function App() {
               </Popup>
             )}
           </>
+        ))}
+
+        {places.map((place, index) => (
+          <Marker
+            latitude={place.latitude}
+            longitude={place.longitude}
+            onClick={() => handleSelectPlace(place)}
+          >
+            <Room style={{ cursor: "pointer" }} />
+
+            {currentPlaceId === place.id && (
+              <Popup
+                latitude={place.latitude}
+                longitude={place.longitude}
+                onClose={() => setCurrentPlaceId(undefined)}
+                anchor="top"
+              >
+                <div className="card">{place.place_name}</div>
+              </Popup>
+            )}
+          </Marker>
         ))}
 
         {newPlace && (
@@ -208,7 +290,6 @@ export default function App() {
             </div>
           </Popup>
         )}
-
         {showRegister && <Register setShowRegister={setShowRegister} />}
         {showLogin && (
           <Login
@@ -218,6 +299,13 @@ export default function App() {
           />
         )}
         <NavigationControl position="bottom-right" />
+
+        <GeolocateControl
+          position="top-left"
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation={true}
+          onGeolocate={handleGeolocate}
+        />
       </ReactMapGL>
     </div>
   );
