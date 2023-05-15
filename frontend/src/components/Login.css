@@ -14,6 +14,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+   background-color:aquamarine;
 }
 
 .loginCancel {
@@ -34,7 +35,7 @@
 .loginBtn {
   border: none;
   padding: 5px;
-  background-color: teal;
+  background-color: green;
   color: white;
   cursor: pointer;
 }

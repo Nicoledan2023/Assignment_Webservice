@@ -6,6 +6,7 @@ async function searchPlaces(longitude, latitude) {
 
   const radius = 50000;
 
+  //const coffeePlacesUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/coffee.json?proximity=-75.6972,45.4215&access_token=${accessToken}&limit=600`;
   const coffeePlacesUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/coffee.json?proximity=${longitude},${latitude}&radius=${radius}&access_token=${accessToken}&limit=30`;
 
   const coffeePlacesResponse = await axios.get(coffeePlacesUrl);

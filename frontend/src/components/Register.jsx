@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cancel, Room } from "@material-ui/icons";
+import { Cancel, Room ,SentimentSatisfiedAlt} from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
 import "./register.css"
@@ -33,11 +33,11 @@ export default function Register({ setShowRegister }) {
     return (
       <div className="registerContainer">
         <div className="logo">
-          <Room />
-          DanDan
+          <SentimentSatisfiedAlt />
+          Register
         </div>
         <form className="registerForm" onSubmit={ handleSubmit }>
-       
+        <label>Username</label>
           <input
             className="registerInput"
             type="text"
@@ -66,7 +66,7 @@ export default function Register({ setShowRegister }) {
             <span className="failure">Something Wrong!</span>
           ) }
         </form>
-        <button className="registerLoginButton">Login</button>
+       
         <Cancel className="registerCancel" onClick={ () => setShowRegister(false)} />
       </div>
     );

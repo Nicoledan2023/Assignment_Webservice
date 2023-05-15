@@ -2,9 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ReactMapGL from "react-map-gl";
 import { Marker, Popup } from "react-map-gl";
+import { FreeBreakfast } from "@material-ui/icons";
 import {
   LabelTwoTone,
-  Room,
   SignalCellularNullRounded,
   Star,
 } from "@material-ui/icons";
@@ -111,6 +111,10 @@ export default function App() {
   };
 
   const handleSubmit = async (e) => {
+    if (currentUser === null) {
+      alert("Please login first");
+      return;
+    }
     e.preventDefault();
     const newPin = {
       username: currentUser,
@@ -123,6 +127,7 @@ export default function App() {
 
     try {
       const res = await axios.post("/pins", newPin);
+
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (err) {
@@ -141,6 +146,9 @@ export default function App() {
 
   return (
     <div className="App">
+      <div className="welcome">
+        Welcome ! Start to find your favorite coffee shop!
+      </div>
       <div className="button-container">
         {currentUser ? (
           <button className="logout" onClick={handlelogout}>
@@ -165,8 +173,6 @@ export default function App() {
         dragPan={true}
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         transitionDuration="200"
-
-        
         mapStyle="mapbox://styles/mapbox/streets-v11"
         // onMove={(evt) => {
         //   if (evt.viewport && evt.viewport.zoom) {
@@ -177,7 +183,7 @@ export default function App() {
         //onViewportChange={(viewport) => setViewport(viewport)}
         style={{
           position: "relative",
-          width: "90vw",
+          width: "95vw",
           height: "90vh",
         }}
         onDblClick={handleAddClick}
@@ -185,15 +191,16 @@ export default function App() {
         {pins.map((p) => (
           <>
             <Marker
+              key={p._id}
               latitude={p.lat}
               longitude={p.long}
               offsetLeft={-viewport?.zoom * 3.5}
               offsetTop={-viewport?.zoom * 7}
             >
-              <Room
+              <FreeBreakfast
                 style={{
                   //   fontSize: viewport.zoom * 7,
-                  color: p.username === currentUser ? "tomato" : "slateblue",
+                  color: p.username === currentUser ? "orange" : "blue",
                   cursor: "pointer",
                 }}
                 onClick={() => handleMarkerClick(p._id, p.lat, p.long)}
@@ -210,17 +217,15 @@ export default function App() {
                 onClose={() => setCurrentPlaceId(undefined)}
               >
                 <div className="card">
-                  <label>Place</label>
+                  <label>Title</label>
                   <h4 className="place">{p.title}</h4>
-                  <label>Review</label>
+                  <label>Description</label>
                   <p className="desc">{p.desc}</p>
-                  <label>Place</label>
 
                   <label>Rating</label>
                   <div className="stars">
                     {Array(p.rating).fill(<Star className="star" />)}
                   </div>
-                  <label>Information</label>
                   <span className="username">
                     Created by <b>{p.username}</b>
                   </span>
@@ -237,7 +242,7 @@ export default function App() {
             longitude={place.longitude}
             onClick={() => handleSelectPlace(place)}
           >
-            <Room style={{ cursor: "pointer" }} />
+            <FreeBreakfast style={{ cursor: "pointer" }} />
 
             {currentPlaceId === place.id && (
               <Popup
@@ -246,7 +251,7 @@ export default function App() {
                 onClose={() => setCurrentPlaceId(undefined)}
                 anchor="top"
               >
-                <div className="card">{place.place_name}</div>
+                <div className="aroundcard">{place.place_name}</div>
               </Popup>
             )}
           </Marker>
@@ -268,9 +273,9 @@ export default function App() {
                   placeholder="Enter a title"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <label>Review</label>
+                <label>Description</label>
                 <textarea
-                  placeholder="Say us something about this place."
+                  placeholder="Say something about this place."
                   onChange={(e) => setDesc(e.target.value)}
                 />
                 <label>Rating</label>

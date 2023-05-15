@@ -29,6 +29,7 @@ export default function Login({ setShowLogin, myStorage ,setCurrentUser}) {
     } catch (err) {
       setFailure(true);
     }
+
   };
 
 
@@ -36,7 +37,7 @@ export default function Login({ setShowLogin, myStorage ,setCurrentUser}) {
       <div className="loginContainer">
         <div className="logo">
           <Room />
-          DanDan
+          Login
         </div>
         <form className="registerForm" onSubmit={handleSubmit}>
        <label>User Name</label>
@@ -64,5 +65,6 @@ export default function Login({ setShowLogin, myStorage ,setCurrentUser}) {
         <Cancel className="loginCancel" onClick={ () => setShowLogin(false)} />
       </div>
     );
-  }
+}
+  
 
