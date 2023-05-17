@@ -134,7 +134,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="welcome">
-        Welcome ! Start to record your favorite coffee shop!
+        Welcome ! Start to record your favorite coffee stores!
       </div>
 
       <div className="button-container">
@@ -193,7 +193,7 @@ export default function App() {
                   onClose={() => setCurrentPlaceId(undefined)}
                 >
                   <div className="card">
-                    <label className="labelcard">Title</label>
+                    <label className="labelcard">Place</label>
                     <h4 className="place">{p.title}</h4>
                     <label className="labelcard">Description</label>
                     <p className="desc">{p.desc}</p>
@@ -299,6 +299,17 @@ export default function App() {
                   <h3>
                     [{index + 1}] : {p.title}
                   </h3>
+                  <p>
+                    <label
+                      style={{
+                        fontSize: "small",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Created By :
+                    </label>
+                    {p.username}
+                  </p>
                   <p>
                     <label
                       style={{
