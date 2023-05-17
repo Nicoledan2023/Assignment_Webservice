@@ -134,7 +134,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="welcome">
-        Welcome ! Start to record your favorite coffee stores!
+        Welcome ! Start to record your favorite coffee shops!
       </div>
 
       <div className="button-container">
