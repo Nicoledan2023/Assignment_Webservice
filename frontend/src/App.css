@@ -6,7 +6,7 @@
     justify-content: space-around;
 }
 
-label{
+.labelcard{
     width: max-content;
     color: red;
     font-size: 18px;
@@ -110,3 +110,60 @@ input::placeholder,textArea::placeholder{
     font-weight: bolder;
     background-color: yellow;
 }
+
+.maplist{
+width: 98vw;
+height: 100vh;
+display: flex;
+}
+.list-container {
+  width: 25%;
+  height: 90vh;
+  float: right;
+  font-size: small;
+  background-color: #aedab6;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+
+.map-container
+{
+    margin-left: 10px;
+    width: 65vw;
+    height: 70%;
+}
+.App
+{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x:hidden;
+    overflow-y:hidden;
+     margin-bottom: 2px;
+}
+
+.record-count
+{
+    font-size: large;
+    color: red;
+    font-weight: bold;
+}
+
+.marker-container {
+  position: relative;
+  top: -3px;
+   left: -10px;
+  z-index: 1;
+}
+
+.marker-number {
+  background-color: red;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 50%;
+}
+
