@@ -34,12 +34,12 @@ export default function App() {
   });
 
   const [places, setPlaces] = useState([]);
-  const [setCurrentPlace] = useState(undefined);
+  const [currentPlace, setCurrentPlace] = useState(undefined);
   const [coffeePlaces, setCoffeePlaces] = useState([]);
-  const [setSelectedPlace] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const handleSelectPlace = async (place) => {
-    //  const result = await searchPlaces(place.longitude, place.latitude);
+    const result = await searchPlaces(place.longitude, place.latitude);
     // setPlaces(result);
     setCurrentPlaceId(place.id);
     setSelectedPlace(place);
